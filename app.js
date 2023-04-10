@@ -29,10 +29,21 @@ app.post('/tweets',(req,res)=>{
 })
 
 app.get('/tweets',(req,res)=>{
+    let serverResponse = []
+
     if(savedTweets.length === 0){
         return res.send(savedTweets)
     }
 
+    savedTweets.forEach((publi)=>{
+        const { username, tweet} = publi
+        
+        const avatar = servUsers.find((users)=> users.username === username).avatar
+
+        serverResponse.push({username,avatar,tweet})
+    })
+    
+    res.send(serverResponse)
 })
 
 const servUsers = []
